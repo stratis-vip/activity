@@ -1,0 +1,21 @@
+{
+  "name": "activity",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "start": "node dist/test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^9.6.5",
+    "tcx-file-class": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.6",
+    "jasmine": "^3.1.0",
+    "typescript": "^2.8.1"
+  },
+  "description": ""
+}
