@@ -1,7 +1,13 @@
 import TcxFile from "tcx-file-class";
 
+
 import * as path from 'path';
 import * as fs from 'fs';
+import Activity from "./classes/activity";
+import InfoLap from "./classes/infoLap";
+import { secsToTime } from "./utils/functions";
+import { WSAESOCKTNOSUPPORT } from "constants";
+
 // import { get } from 'https';
 // // ;
 // const file = fs.createWriteStream("fromnet.tcx");
@@ -18,6 +24,13 @@ import * as fs from 'fs';
 //     });
 // })
 
+
 const tcx = new TcxFile(path.join(__dirname,"garmin.tcx"),(err)=>{
-    console.log(tcx.getId());
+    const act = new Activity(tcx);
+    console.log(act.id);
+    console.log(`\nFrom laps:\n${act.distanceFromLaps}`);
+            console.log(secsToTime(act.timeFromLaps));
+            console.log(`\nFrom points:\n${act.distanceDromPoints}`);
+            console.log(secsToTime(act.timeFromPoints));
 })
+
