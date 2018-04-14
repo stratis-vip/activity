@@ -1,4 +1,4 @@
-import { iGeoPoint } from "./iFaces";
+import {iGeoPoint} from "../classes/iFaces"
 import * as consts from "./consts";
 /**
  * Κρατά τα δεδομένα του γεωγραφικού σημείου

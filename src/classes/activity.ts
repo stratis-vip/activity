@@ -1,10 +1,11 @@
-import TcxFile from "tcx-file-class";
+import {TcxFile} from "tcx-file-class";
 import * as consts from "../classes/consts";
-import Lap from "tcx-file-class/dist/classes/lap";
+
 import GeoPoint from "./geoPoint";
 import { apostasi, secsToTime } from "../utils/functions";
 import InfoLap from "./infoLap";
-import Point from "tcx-file-class/dist/classes/point";
+import {Lap} from "tcx-file-class/index"
+import {GpsPoint} from "tcx-file-class"
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση 
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους 
@@ -26,7 +27,7 @@ export default class Activity {
     /**Πίνακας με τους πληροφοριακούς γύρους. Laps που δεν έχουν τα Points */
     infoLaps: Array<InfoLap> = new Array<InfoLap>();
     /**Πίνακας με τα σημεία Point όλης της δραστηριότητας */
-    tPoints: Array<Point> = new Array<Point>();
+    tPoints: Array<GpsPoint> = new Array<GpsPoint>();
     /** 
      * @param {TcxFile} xmlSource το αντικείμενο που κρατά όλα τα στοιχεία από το tcx αρχείο
      */
@@ -34,9 +35,9 @@ export default class Activity {
         if (xmlSource.isReady) {
             this.id = xmlSource.getId();
             let laps: Array<Lap> = xmlSource.getLaps();
-            laps.forEach((lap) => {
+            laps.forEach((lap:Lap) => {
                 this.infoLaps.push(new InfoLap(lap));
-                lap.trackPoints.forEach((point) => {
+                (lap as Lap).trackPoints.forEach((point:GpsPoint) => {
                     if (point.position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
                         this.tPoints.push(point);
                     }
@@ -72,7 +73,7 @@ function getDistanceFromLaps(laps: InfoLap[]): number {
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {number} η απόσταση σε μέτρα
  */
-function getDistanceFromPoints(points: Point[]): number {
+function getDistanceFromPoints(points: Array<GpsPoint>): number {
     let distance = 0;
     let pointsCount = points.length;
     let from: GeoPoint = new GeoPoint();
@@ -116,7 +117,7 @@ function getTimeFromLaps(laps: InfoLap[]): number {
  * @param {Point[]} points τα σημεία Point από την δραστηριότητα
  * @return o χρόνος σε δευτερόλεπτα
  */
-function getTimeFromPoints(points: Point[]): number {
+function getTimeFromPoints(points: Array<GpsPoint>): number {
     let time = 0.0;
     let pointsCount = points.length;
     let from: Date = null;

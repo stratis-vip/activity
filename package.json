@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^9.6.5",
-    "tcx-file-class": "^1.0.10"
+    "tcx-file-class": "^1.0.12"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.6",

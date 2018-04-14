@@ -1,4 +1,4 @@
-import Lap from "tcx-file-class/dist/classes/lap";
+import {Lap} from "tcx-file-class";
 
 /** Οι πληροφορίες που έχει συγκεντρωτικά το κάθε Lap στο tcx αρχείο */
 class InfoLap {

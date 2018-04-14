@@ -25,7 +25,7 @@ import { WSAESOCKTNOSUPPORT } from "constants";
 // })
 
 
-const tcx = new TcxFile(path.join(__dirname,"garmin.tcx"),(err)=>{
+const tcx = new TcxFile(path.join(__dirname,"garmin.tcx"),(err:string)=>{
     const act = new Activity(tcx);
     console.log(act.id);
     console.log(`\nFrom laps:\n${act.distanceFromLaps}`);
