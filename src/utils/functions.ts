@@ -144,7 +144,7 @@ const getNextPointCordinatesFromDistanceBearing = (
   let temp = new geoPoint();
   temp.latitudeDegrees = Math.asin(
     Math.sin(φ1) * Math.cos(d / R) +
-      Math.cos(φ1) * Math.sin(d / R) * Math.cos(brng)
+    Math.cos(φ1) * Math.sin(d / R) * Math.cos(brng)
   );
   let φ2 = temp.latitudeDegrees;
   temp.longitudeDegrees =
@@ -160,12 +160,64 @@ const getNextPointCordinatesFromDistanceBearing = (
   return temp;
 };
 
+/**
+ * Mετατρέπει την ταχύτητα από m/s σε δεκαδικό ρυθμό min/km
+ * @param {number} value η ταχύτητα σε m/s
+ * @returns string το ρυθμό σε λεπτά το χιλιόμετρο με τη μορφή Λ,Δ 
+ * @example decimalPaceFromSpeedMpS(2.77) = 6 (06:00.00)
+ */
+const decimalPaceFromSpeedMpS = (value: number) => {
+  //test ok
+  return 50 / (value * 3);
+};
+
+/**
+ * Mετατρέπει την ταχύτητα από m/s σε ρυθμό της μορφής ΛΛ:ΔΔ.ΕΕ
+ * @param  {number} value η ταχύτητα σε m/s
+ * @returns string ο ρυθμός σε μορφή ΛΛ:ΔΔ.ΕΕ
+ */
+const TimePaceFromSpeedMpS = (value: number): string => {
+  //test ok
+  return decimalPaceToTimePace(decimalPaceFromSpeedMpS(value));
+};
+
+/**
+ * Mετατρέπει τον ρυθμο από την δεκαδική του μορφή στη μορφή ΛΛ:ΔΔ.ΕΕ
+ * @param  {number} value
+ * @returns string: ο ρυθμός σε μορφή ΛΛ:ΔΔ.ΕΕ
+ */
+const decimalPaceToTimePace = (value: number) => {
+  return secsToTime(value * 60, false);
+};
+
+function addTuples<T extends Array<any>>(arg: T, arg1: T): T {
+  let res = arg;
+
+  for (let i = 0; i !== arg.length; ++i) {
+    //console.log(typeof arg[i]);
+    if (arg[i] instanceof Array) {
+      for (let j = 0; j !== arg[i].length; ++j) {
+        for (let k = 0; k !== arg1[i].length; ++k) {
+          if (res[i][j].zone === arg1[i][k].zone) {
+            res[i][j].time += arg1[i][k].time;
+          }
+        }
+      }
+    } else {
+      if (!isNaN(arg1[i])) {
+        res[i] = arg[i] + arg1[i];
+      }
+    }
+  }
+  return arg;
+}
 export {
+  addTuples,
   apostasi,
   // Bearing,
   // calculateBmi,
-  // decimalPaceFromSpeedMpS,
-  // decimalPaceToTimePace,
+  decimalPaceFromSpeedMpS,
+  decimalPaceToTimePace,
   degToRads,
   // distanceFromMtoKM,
   // formatDate,
@@ -175,5 +227,5 @@ export {
   radToDegrees,
   secsToTime,
   // speedFromMpStoKpH,
-  // TimePaceFromSpeedMpS
+  TimePaceFromSpeedMpS
 };

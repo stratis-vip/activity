@@ -104,3 +104,8 @@ export interface iGeoPoint {
 export {
     iGeoPoint as IGeoPoint
 }
+
+export interface iZone{
+    zone:number, 
+    time:number
+}

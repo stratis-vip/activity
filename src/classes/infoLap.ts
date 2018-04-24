@@ -1,7 +1,7 @@
-import {Lap} from "tcx-file-class";
+import { Lap} from "tcx-file-class";
 
 /** Οι πληροφορίες που έχει συγκεντρωτικά το κάθε Lap στο tcx αρχείο */
-class InfoLap {
+export default class InfoLap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */
@@ -44,5 +44,3 @@ class InfoLap {
         this.avgSpeed = obj.avgSpeed;
     }
 }
-
-export default InfoLap;
