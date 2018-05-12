@@ -11,7 +11,7 @@
   "dependencies": {
     "@types/node": "",
     "npm": "^6.0.1",
-    "tcx-file-class": "^1.0.19"
+    "tcx-file-class": "^1.0.21"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.7",
