@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^9.6.6",
-    "npm": "^6.0.0",
+    "@types/node": "",
+    "npm": "^6.0.1",
     "tcx-file-class": "^1.0.19"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.8.6",
+    "@types/jasmine": "^2.8.7",
     "@types/xml2js": "^0.4.2",
     "jasmine": "^3.1.0",
     "typescript": "^2.8.3"

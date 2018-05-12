@@ -1,6 +1,6 @@
 import geoPoint from "../classes/geoPoint";
-const SECONDS_IN_DAY = 86400;
-const SECONDS_IN_HOUR = 3600;
+import * as consts from '../classes/consts';
+
 
 /** 
  * Υπολογίζει την απόσταση σε ΜΕΤΡΑ από το σημείο FromPoint στο σημείο ToPoint
@@ -69,24 +69,24 @@ const radToDegrees = (angle: number): number => {
 const secsToTime = (value: number, showHours?: boolean) => {
   showHours === undefined ? (showHours = true) : (showHours = showHours);
   let result: string;
-  showHours && value < SECONDS_IN_DAY && value < SECONDS_IN_HOUR ? (result = `00:`) : (result = "");
+  showHours && value < consts.SECONDS_IN_DAY && value < consts.SECONDS_IN_HOUR ? (result = `00:`) : (result = "");
   if (value <= 0) {
     return result + "00:00.00";
   }
   else {
     //βρίσκω τις ημέρες
-    if (value > SECONDS_IN_DAY) {
-      let days = Math.trunc(value / SECONDS_IN_DAY);
-      value -= days * SECONDS_IN_DAY;
+    if (value > consts.SECONDS_IN_DAY) {
+      let days = Math.trunc(value / consts.SECONDS_IN_DAY);
+      value -= days * consts.SECONDS_IN_DAY;
       result = `${days}d `;
       value < 3600 ? result += "00:" : result = result;
     }
 
     //βρίσκω τις ώρες
-    let hrs = Math.floor(value / SECONDS_IN_HOUR);
+    let hrs = Math.floor(value / consts.SECONDS_IN_HOUR);
 
     if (hrs > 0) {
-      value -= hrs * SECONDS_IN_HOUR;
+      value -= hrs * consts.SECONDS_IN_HOUR;
       hrs > 9
         ? (result += hrs.toString() + ":")
         : (result = `0${hrs.toString()}:`);
@@ -211,6 +211,19 @@ function addTuples<T extends Array<any>>(arg: T, arg1: T): T {
   }
   return arg;
 }
+/**
+ * Βρίσκει τον μέσο όρο από τον πίνακα με αριθμούς
+ * 
+ * @param ar πίνακας με αριθμούς
+ */
+function avgArray(ar: Array<number>): number {
+  let avg = 0;
+  if (ar.length != 0) {
+    avg = ar.reduce(((a,b)=>a+b));
+    return avg / ar.length;
+  } else { return consts.ERROR_NUMBER_VALUE; }
+}
+
 export {
   addTuples,
   apostasi,
@@ -227,5 +240,7 @@ export {
   radToDegrees,
   secsToTime,
   // speedFromMpStoKpH,
-  TimePaceFromSpeedMpS
+  TimePaceFromSpeedMpS,
+
+  avgArray
 };
