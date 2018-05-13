@@ -51,7 +51,7 @@ class test {
 }
 
 
-let file = new test(path.join(__dirname, 'g4.tcx')).
+let file = new test(path.join(__dirname, 'g3.tcx')).
     read()
     .then(actObject => {
         console.log((actObject as Activity).id);
