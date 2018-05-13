@@ -10,7 +10,7 @@ class test {
     }
 
     read() {
-        return new Promise((resolve, reject) => {
+        return new Promise<Activity>((resolve, reject) => {
             console.log(`...reading ${this._fName}`);
             let tcx = new TcxFile(this._fName, (err) => {
                 if (err) { reject(err) }
@@ -24,12 +24,12 @@ class test {
                     console.timeEnd();
                     console.log(`...saving file`);
                     console.time();
-                    
-                    this.write(act);
-                    console.timeEnd();
-                    console.log(`Done!`)
 
-                    resolve(act)
+                    this.write(act).then(() => {
+                        console.timeEnd();
+                        console.log(`Done!`);
+                        resolve(act);
+                    });
                 }
             })
         });
@@ -39,6 +39,10 @@ class test {
             fs.writeFile(path.join(__dirname, "act.json"), JSON.stringify(act.proccessElements), (err) => {
                 if (err) {
                     console.log(err);
+                    reject(err);
+                }
+                else {
+                    resolve();
                 }
             })
 
@@ -47,7 +51,7 @@ class test {
 }
 
 
-let file = new test(path.join(__dirname, 'g3.tcx')).
+let file = new test(path.join(__dirname, 'g4.tcx')).
     read()
     .then(actObject => {
         console.log((actObject as Activity).id);
