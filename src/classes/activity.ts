@@ -40,7 +40,7 @@ export default class Activity {
     /** 
      * @param {TcxFile} xmlSource το αντικείμενο που κρατά όλα τα στοιχεία από το tcx αρχείο
      */
-    constructor(xmlSource: TcxFile, zones?: [number, number, number, number]) {
+    constructor(athleteId:number,xmlSource: TcxFile, zones?: [number, number, number, number]) {
         if (xmlSource.isReady) {
             this.id = xmlSource.getId();
             let laps: Array<Lap> = new Array<Lap>();
@@ -61,6 +61,9 @@ export default class Activity {
             this.timeFromLaps = getTimeFromLaps(this.infoLaps);
             this.timeFromPoints = this.proccessElements.totalTime;
             this.isReady = true;
+            this.proccessElements.id = this.id;
+            this.proccessElements.sport = this.sport;
+            this.proccessElements.athlete = athleteId;
             if (this.proccessElements.points.length > 1) {
                 this.getFasters();
             }
@@ -378,6 +381,9 @@ function getBiggerValue(value1: number, value2: number): number {
 
 
 export class ResultClass {
+    id = "";
+    sport = 255;
+    athlete = 1;
     distance = 0;
     totalTime = 0;
     minAlt = consts.ERROR_NUMBER_VALUE;

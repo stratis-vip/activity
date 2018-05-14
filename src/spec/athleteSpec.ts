@@ -5,6 +5,7 @@ describe("Κλάση Αθλητής\n", () => {
     let nowDate: Date;
     let athlitis: Athlete;
     let testDate: Date;
+    let zeroZones = [0,0,0,0];
     beforeEach((done) => {
         nowDate = new Date(2018, 4, 3, 0, 0, 0);
         athlitis = new Athlete(nowDate);
@@ -54,6 +55,30 @@ describe("Κλάση Αθλητής\n", () => {
     it(`Το βάρος δεν πρέπει να είναι πάνω από ${consts.MAXWEIGHT} κιλά`, (done) => {
         athlitis.weight =consts.MAXHEIGHT;
         expect(athlitis.weight).toBe(consts.ERROR_NUMBER_VALUE);
+        done();
+    });
+
+    it('Ελέγχω τις ζώνες καρδιακής λειτουργίας:' , (done) => {
+        athlitis.zones=[120,134,145,156];
+        expect(athlitis.zones).toEqual(athlitis.zones);
+        done();
+    });
+
+    it('Ελέγχω τις ζώνες καρδιακής λειτουργίας:\n\tΔεν μπορεί να υπάρχει τιμή μικρότερη από την minimum' , (done) => {
+        athlitis.zones=[consts.MIN_HEART_RATE,134,145,156];
+        expect(athlitis.zones).toEqual(zeroZones);
+        done();
+    });
+    
+    it('Ελέγχω τις ζώνες καρδιακής λειτουργίας:\n\tΔεν μπορεί να υπάρχει τιμή μεγαλύτερη από την max' , (done) => {
+        athlitis.zones=[102,134,145,consts.MAX_HEART_RATE];
+        expect(athlitis.zones).toEqual(zeroZones);
+        done();
+    });
+
+    it('Ελέγχω τις ζώνες καρδιακής λειτουργίας:\n\tΔεν μπορεί να υπάρχει τιμή μεγαλύτερη από την max' , (done) => {
+        athlitis.zones=[102,102,145,145];
+        expect(athlitis.zones).toEqual(zeroZones);
         done();
     });
     

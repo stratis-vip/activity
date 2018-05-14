@@ -157,3 +157,8 @@ export class SavePoints {
         }
     }
 }
+
+export class DataRecord {
+    date:Date;
+    value:number | string | any;
+}

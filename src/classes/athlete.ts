@@ -1,10 +1,20 @@
 import * as consts from './consts';
 
 export default class Athlete {
-    private _alfavit: string;
+
+    //Ο μοναδικός αριθμός που χαρακτηρίζει τον αθλητή
+    private _id: number;
+    get id() {
+        return this._id;
+    }
+
+    set id(value: number) {
+        if (this._id !== value) {
+            this._id = value
+        }
+    }
     constructor(nowDate?: Date) {
         nowDate ? this.now = nowDate : this.now = new Date();
-
     }
 
     private _name: string = consts.DEFAULT_NAME_STRING;
@@ -60,5 +70,39 @@ export default class Athlete {
         }
     }
 
+    private _height:number;
+    get height(){
+        return this._height;
+    }
+    
+    
+    set height(value:number){
+        if (this._height !== value){
+            this._height = value
+        }
+    }
+
+    private _zones: [number, number, number, number];
+    get zones() {
+        return this._zones;
+    }
+
+    set zones(value: [number, number, number, number]) {
+        let isValid = true;
+        for (let i = 0; i != value.length - 1; ++i) {
+            if (value[i] >= value[i + 1]
+                || value[i] <= consts.MIN_HEART_RATE
+                || value[i] >= consts.MAX_HEART_RATE
+                || value[i + 1] >= consts.MAX_HEART_RATE) {
+                isValid = false;
+                break;
+            }
+        }
+        if (isValid) {
+            if (this._zones !== value) {
+                this._zones = value
+            }
+        } else { this._zones = [0, 0, 0, 0] }
+    }
 }
 

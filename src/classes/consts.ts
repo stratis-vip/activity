@@ -13,3 +13,7 @@ export const MINHEIGHT= 0.546;   //Chandra Bahadur Dangi https://en.wikipedia.or
 export const MAXHEIGHT= 2.72; //Robert Wadlow https://en.wikipedia.org/wiki/Robert_Wadlow
 
 export const MAXVO2MAX= 100;
+
+export const MAX_HEART_RATE = 220;
+export const MIN_HEART_RATE = 27;
+
