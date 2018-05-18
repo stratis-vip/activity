@@ -1,4 +1,4 @@
-import { secsToTime, apostasi, getNextPointCordinatesFromDistanceBearing, addTuples, avgArray } from "../utils/functions";
+import { secsToTime, apostasi, getNextPointCordinatesFromDistanceBearing, addTuples, avgArray, movingAvg } from "../utils/functions";
 import GeoPoint from "../classes/geoPoint";
 import { iZone } from "../classes/iFaces";
 import * as consts from '../classes/consts';
@@ -43,5 +43,52 @@ describe("Έλεγχος συναρτήσεων χρόνου", () => {
         expect(avgArray(ar)).toBe(consts.ERROR_NUMBER_VALUE);
         ar = [3.4, 5.6, 7.8, 9, 10.2, 34.33, 45.78];
         expect(avgArray(ar)).toBe(16.587142857142858);
-    })
+    });
+
+    it(`Έλεγχος κινούμενου μέσου όρου.\n
+    Πρέπει να επιστρέφει τον ίδιο πίνακα όταν έχει μηδενικό μήκος ο πίνακας.`,(done)=>{
+        let ar:Array<number> = [];
+        expect(movingAvg(ar)).toEqual([]);
+        done();
+    });
+
+    it(`Έλεγχος κινούμενου μέσου όρου.\n
+    Πρέπει να επιστρέφει τον ίδιο πίνακα όταν δίνεται περίοδος 1 ή αρνητική περίοδο.`,(done)=>{
+        let ar:Array<number> = [];
+        expect(movingAvg(ar,1)).toEqual([]);
+        ar = [1,2,3,4,5];
+        expect(movingAvg(ar,1)).toEqual(ar);
+        expect(movingAvg(ar,-1)).toEqual(ar);
+        done();
+    });
+
+    it(`Έλεγχος κινούμενου μέσου όρου.\n
+    Πρέπει να επιστρέφει πίνακα με μέση τιμή όλων, όταν δίνεται περίοδος 0.`,(done)=>{
+        let ar:Array<number> = [];
+        ar = [1,2,3,4,5];
+        expect(movingAvg(ar,0)).toEqual([3]);
+        expect(movingAvg(ar,-0)).toEqual([3]);
+        done();
+    });
+
+    it(`Έλεγχος κινούμενου μέσου όρου.\n
+    Πρέπει να επιστρέφει πίνακα με μέση τιμή όλων, όταν δίνεται περίοδος μεγαλύτερη από το μήκος του πίνακα.`,(done)=>{
+        let ar:Array<number> = [];
+        ar = [1,2,3,4,5];
+        expect(movingAvg(ar,8)).toEqual([3]);
+        expect(movingAvg(ar,-8)).toEqual(ar);
+        done();
+    });
+
+    it(`Έλεγχος κινούμενου μέσου όρου.\n
+    Πρέπει να επιστρέφει πίνακα με μέση τιμή όλων, όταν δίνεται περίοδος μεγαλύτερη από το μήκος του πίνακα.`,(done)=>{
+        let ar:Array<number> = [];
+        ar = [1,2,3,4,5, 45,67,12];
+        expect(movingAvg(ar,3)).toEqual([null,null,2,3,4,18,39,41.333333333333336]);
+        let mAvg = movingAvg(ar,8);
+        expect(mAvg[7]).toEqual(17.375);
+        expect(mAvg[5]).toEqual(null);
+        done();
+    });
+
 });

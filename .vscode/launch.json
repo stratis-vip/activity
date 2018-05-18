@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch neo Program",
-            "program": "${workspaceFolder}/dist/neo.js",
+            "program": "${workspaceFolder}/dist/dok.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

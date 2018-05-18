@@ -219,9 +219,55 @@ function addTuples<T extends Array<any>>(arg: T, arg1: T): T {
 function avgArray(ar: Array<number>): number {
   let avg = 0;
   if (ar.length != 0) {
-    avg = ar.reduce(((a,b)=>a+b));
+    avg = ar.reduce(((a, b) => a + b));
     return avg / ar.length;
   } else { return consts.ERROR_NUMBER_VALUE; }
+}
+
+
+function movingAvg(ar: Array<number | null>, period?: number): Array<number> | null {
+  //κενός πίνακας => επιστρέφει []
+  if (ar.length === 0){
+    return ar;
+  }
+
+  let per:number;
+  if (period !== undefined){
+    per = period;
+  } else {
+    per= 0;
+  }
+  //δεν υπάρχει moving με 1!!!! επιστρέφει ο ίδιος πίνακας
+  if (per ===1 || per <0){
+    return ar;
+  }
+
+  if (per === 0 || per > ar.length) {
+    let subSum = ar.reduce((a,b)=>a+b);
+    return [subSum/ar.length];
+  }
+
+  let result = [];
+  for (let i=0;i!=ar.length;++i){
+    if (i+1 >=per){
+      let sum:number | null = null;
+      for (let j=0; j!=per;++j){
+        if (sum === null && ar[i-j] === null){
+          sum = null;
+        }else {
+          sum += ar[i-j];
+        }
+      }
+      if (sum === null){
+        result.push(null);
+      }else {
+        result.push(sum/per);
+      }
+    }else {
+      result.push(null);
+    }
+  }
+  return result;
 }
 
 export {
@@ -242,5 +288,6 @@ export {
   // speedFromMpStoKpH,
   TimePaceFromSpeedMpS,
 
-  avgArray
+  avgArray,
+  movingAvg
 };
