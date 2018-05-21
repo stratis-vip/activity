@@ -83,7 +83,7 @@ class test {
 
 
 
-let file = new test(athlete, path.join(__dirname, 'g3.tcx'));
+let file = new test(athlete, path.join(__dirname, 'g5.tcx'));
 file.read()
     .then(actObject => {
         console.log((actObject as Activity).id);
