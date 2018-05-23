@@ -383,7 +383,7 @@ function getBiggerValue(value1: number, value2: number): number {
 export class ResultClass {
     id = "";
     sport = 255;
-    athlete = 1;
+    athlete =consts.ERROR_NUMBER_VALUE;
     distance = 0;
     totalTime = 0;
     minAlt = consts.ERROR_NUMBER_VALUE;
