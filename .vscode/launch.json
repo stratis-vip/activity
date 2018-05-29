@@ -17,6 +17,15 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "TEst Jasmine",
+            "program": "${workspaceFolder}/node_modules/.bin/jasmine",
+            "args": [
+                "dist/spec/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/dist/test.js",
             "outFiles": [

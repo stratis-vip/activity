@@ -8,6 +8,33 @@ import { secsToTime, avgArray } from "./utils/functions";
 import { iZone, SavePoints } from "./classes/iFaces";
 import Athlete from "./classes/athlete";
 import { start } from "repl";
+import { EventEmitter } from 'events';
+
+
+class alfa extends EventEmitter {
+    private _name: string;
+    constructor(name: string) {
+        super();
+        this._name = name;
+    
+    }
+    emitMessage(on:string, msg:string) {
+        this.emit(on, msg);
+    }
+
+    count() {
+        for (let i = 0; i !== 10; ++i) {
+            setTimeout(() => {
+                if (i>4){
+                this.emitMessage('message','opa');
+                }else{
+                    this.emitMessage('dir','dir');
+                }
+            }, 3000);
+        }
+    }
+
+}
 
 // import { get } from 'https';
 // // ;
@@ -41,9 +68,9 @@ import { start } from "repl";
 
 
 
-async function test(fRead: string, fWrite: string, athlete: number, zones?: Array<number> | any){
-    let tcx:TcxFile = await makeActivity(fRead,fWrite,345,[112,123,134,145]);
-    await tcx.save(fWrite,athlete,zones,()=>{});
+async function test(fRead: string, fWrite: string, athlete: number, zones?: Array<number> | any) {
+    let tcx: TcxFile = await makeActivity(fRead, fWrite, 345, [112, 123, 134, 145]);
+    await tcx.save(fWrite, athlete, zones, () => { });
 }
 
 function makeActivity(fRead: string, fWrite: string, athlete: number, zones?: Array<number> | any) {
@@ -52,20 +79,43 @@ function makeActivity(fRead: string, fWrite: string, athlete: number, zones?: Ar
         if (zones) {
             zone = zones;
         }
-        let tcx = new TcxFile(fRead, (err: string) => {
+        let tcx = new TcxFile();
+        tcx.on('endReading', (err) => {
+            console.log(`EndReading fired with error ${err}`);
+
+        });
+        tcx.on('endWriting', (err) => {
+            console.log(`EndWriting fired with error ${err}`);
+
+        });
+        tcx.on('Proccessing', (proccess) => {
+            console.log(`Proccessing fired with ${proccess}`);
+
+        });
+
+        tcx.on('Process', (proccess) => {
+            console.log(`Activity is ${proccess.value*100}`);
+
+        });
+        tcx.read(fRead, (err: string) => {
             if (!err) {
                 resolve(tcx);
-        }});
+            }
+        });
 
     })
 }
 
-test(path.join(__dirname, "g3.tcx"),path.join(__dirname, "g3NEW.json"),45,[102,123,134,145])
-.then(()=>{
-    console.log('test')}
-)
-.catch((err)=>{
-    console.log(err)});
+test(path.join(__dirname, "g3.tcx"), path.join(__dirname, "g3NEW.json"), 45, [102, 123, 134, 145])
+    .then(() => {
+        console.log('test')
+    }
+    )
+    .catch((err) => {
+        console.log(err)
+    });
+
+
 
 // makeActivity(path.join(__dirname, "g3.tcx"),path.join(__dirname, "g3.json"),45,[102,123,134,145])
 // .then(()=>{console.log('0000OK')})

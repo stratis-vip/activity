@@ -4,10 +4,13 @@ import * as path from 'path';
 import * as consts from "../classes/consts";
 import { ActivitiesTypes } from "../classes/iFaces";
 
+
 describe("Activities TCX\n", () => {
+    let athId =1;
     it("Πρέπει να διαβάζει ένα TcxFile ποδηλατικού αρχείου", (done) => {
-        const tcx = new TcxFile(path.join(__dirname, "/../bike.tcx"), (err: string) => {
-            const act = new Activity(tcx,[121, 133, 145, 157]);
+        const tcx = new TcxFile();
+        tcx.read(path.join(__dirname, "/../bike.tcx"), (err: string) => {
+            const act = new Activity(athId, tcx,[121, 133, 145, 157]);
             expect(act.id).toBe("2018-04-15T09:04:15.000Z");
             expect(act.isReady).toBe(true);
             expect(act.distanceFromLaps).toBe(40036.3);
@@ -53,8 +56,9 @@ describe("Activities TCX\n", () => {
     });
 
     it("Πρέπει να διαβάζει ένα TcxFile", (done) => {
-        const tcx = new TcxFile(path.join(__dirname, "/../garmin.tcx"), (err: string) => {
-            const act = new Activity(tcx, [121, 133, 145, 157]);
+        const tcx = new TcxFile();
+        tcx.read(path.join(__dirname, "/../garmin.tcx"), (err: string) => {
+            const act = new Activity(1,tcx, [121, 133, 145, 157]);
             expect(act.id).toBe("2018-04-12T14:56:42.000Z");
             expect(act.isReady).toBe(true);
             expect(act.distanceFromLaps).toBe(7009.27);
@@ -98,8 +102,9 @@ describe("Activities TCX\n", () => {
 
     describe("Activities TCX\n", () => {
         it("Πρέπει να διαβάζει ένα TcxFile (test.tcx)", (done) => {
-            const tcx = new TcxFile(path.join(__dirname, "/../test.tcx"), (err: string) => {
-                const act = new Activity(tcx);
+            const tcx = new TcxFile();
+            tcx.read(path.join(__dirname, "/../test.tcx"), (err: string) => {
+                const act = new Activity(athId, tcx);
                 expect(act.id).toBe("2018-04-16T16:56:17.000Z");
                 expect(act.isReady).toBe(true);
                 expect(act.distanceFromLaps).toBe(238.92);
@@ -137,8 +142,9 @@ describe("Activities TCX\n", () => {
         });
 
         it("Πρέπει να επιστρέφει μηδενικές τιμές όταν το αρχείο δεν υπάρχει", (done) => {
-            const tcx = new TcxFile(path.join(__dirname, "/../garmin1.tcx"), (err: string) => {
-                const act = new Activity(tcx);
+            const tcx = new TcxFile();
+            tcx.read(path.join(__dirname, "/../garmin1.tcx"), (err: string) => {
+                const act = new Activity(athId, tcx);
                 expect(act.id).toBe("");
                 expect(act.isReady).toBe(false);
                 expect(act.distanceFromLaps).toBe(consts.ERROR_NUMBER_VALUE);
