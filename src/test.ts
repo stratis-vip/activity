@@ -93,8 +93,8 @@ function makeActivity(fRead: string, fWrite: string, athlete: number, zones?: Ar
 
         });
 
-        tcx.on('Process', (proccess) => {
-            console.log(`Activity is ${proccess.value*100}`);
+        tcx.on('progress', (proccess) => {
+            console.log(`Activity is ${proccess.value}`);
 
         });
         tcx.read(fRead, (err: string) => {
