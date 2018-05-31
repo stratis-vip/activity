@@ -1,7 +1,7 @@
 import {Lap, GpsPoint} from "tcx-file-class";
 import GeoPoint from "./geoPoint";
 import * as consts from './consts'
-import Activity from "./activity";
+import {Activity} from "tcx-file-class";
 
 export interface iXsiType {
     'xsi:type': string;

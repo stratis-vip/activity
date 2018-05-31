@@ -2,7 +2,7 @@ import { TcxFile } from "tcx-file-class";
 
 import * as path from 'path'
 import * as fs from 'fs';
-import Activity, { ResultClass, bestTimes } from "./classes/activity";
+import { ResultClass, bestTimes } from "./classes/activity";
 import InfoLap from "./classes/infoLap";
 import { secsToTime, avgArray } from "./utils/functions";
 import { iZone, SavePoints } from "./classes/iFaces";

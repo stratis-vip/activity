@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { TcxFile } from 'tcx-file-class';
-import Activity, { ResultClass, bestTimes } from "./classes/activity";
+import { ResultClass, bestTimes } from "./classes/activity";
+import {Activity} from 'tcx-file-class';
 import Athlete from './classes/athlete';
 
 
@@ -51,7 +52,8 @@ class test {
                     console.log(`...processing activity ${tcx.getId()}`);
                     console.time();
 
-                    let act = new Activity(athlete.id, tcx, [121, 133, 145, 157]);
+                    let act = new Activity();
+                    act.read(athlete.id, tcx, [121, 133, 145, 157]);
                     //let act = new Activity(tcxObject as TcxFile, [121, 133, 145, 157]);
                     console.timeEnd();
                     console.log(`...saving file`);

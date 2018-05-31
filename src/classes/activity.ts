@@ -1,4 +1,5 @@
 import { TcxFile } from "tcx-file-class";
+import {EventEmitter} from 'events';
 import * as consts from "./consts";
 
 import GeoPoint from "./geoPoint";
@@ -13,7 +14,7 @@ import { iZone, ActivitiesTypes, SavePoints } from "./iFaces";
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους 
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export default class Activity {
+export default class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string = consts.ERROR_STRING_VALUE;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */
@@ -40,7 +41,12 @@ export default class Activity {
     /** 
      * @param {TcxFile} xmlSource το αντικείμενο που κρατά όλα τα στοιχεία από το tcx αρχείο
      */
-    constructor(athleteId:number,xmlSource: TcxFile, zones?: [number, number, number, number]) {
+    constructor(){
+        super();
+        this.isReady = false;
+    }
+        read(athleteId:number,xmlSource: TcxFile, zones?: [number, number, number, number]) {
+      
         if (xmlSource.isReady) {
             this.id = xmlSource.getId();
             let laps: Array<Lap> = new Array<Lap>();
