@@ -43,7 +43,8 @@ class test {
     read() {
         return new Promise<Activity>((resolve, reject) => {
             console.log(`...reading ${this._fName}`);
-            let tcx = new TcxFile(this._fName, (err) => {
+            let tcx = new TcxFile();
+                tcx.read(this._fName, (err) => {
                 if (err) { reject(err) }
                 else {
                     console.log(`Done reading ${this._fName}`);
